@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { getUsers } from "../store/actions/userList";
+import { getUsers } from "../../store/actions/userList";
 import { useDispatch, useSelector } from "react-redux";
-import store from "../store";
+import store from "../../store";
 
 const Home = () => {
   const { users, loading, error } = useSelector((state) => state.userList);

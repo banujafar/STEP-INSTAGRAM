@@ -1,8 +1,32 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Banu Jafar
+ • UserProfile component creation;
+ • User profile posts implementation;
+# Murad Masimli
+ • Route organization ✅
+ • Header integration and functionality;
+ • Login page creation;
+ • Login form integration with full functionality and stylization;
+ • Registration page addition;
+ • Registration form development with full functionality and stylization;
+ • Client service
+ • Authentication implementation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Sadig Latifli
+ • Footer addition;
+ • Home page feed development;
+ • Follow/unfollow user functionality;
+ • Shortened user information display implementation;
+
+
+
+
+
+
+
+
+
+
+
