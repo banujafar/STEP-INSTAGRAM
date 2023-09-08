@@ -7,20 +7,19 @@ import Register from "../pages/auth/Register";
 import SiteLayout from "../pages/site/SiteLayout";
 
 const appRouter = createBrowserRouter([
-
   {
-    path: '/auth',
-    element: <AuthLayout/>,
+    path: "/auth",
+    element: <AuthLayout />,
     children: [
       {
-        path: 'login',
-        element: <Login/>
-      },  
+        path: "login",
+        element: <Login />,
+      },
       {
-        path: 'register',
-        element: <Register/>
-      }
-    ]
+        path: "register",
+        element: <Register />,
+      },
+    ],
   },
   {
     path: "/",
@@ -28,15 +27,14 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home/>
+        element: <Home />,
       },
       {
         path: "user",
         element: <UserPage />,
-      },
-    ]
+      }
+    ],
   },
- 
 ]);
 
 export default appRouter;

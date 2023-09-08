@@ -19,14 +19,3 @@
  • Home page feed development;
  • Follow/unfollow user functionality;
  • Shortened user information display implementation;
-
-
-
-
-
-
-
-
-
-
-
