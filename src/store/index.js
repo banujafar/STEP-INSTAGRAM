@@ -1,14 +1,17 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import thunkMiddleware from "redux-thunk"
-import rootReducer from "./reducers";
-const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+import thunkMiddleware from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
+import userProfileReducer from "./userProfileSlice";
 
-const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(thunkMiddleware))
-)
+const composeEnhancers =
+  (typeof window !== "undefined" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 
-
-
-
-export default store
+const store = configureStore(
+  {
+    reducer: { userProfile: userProfileReducer },
+  },
+  composeEnhancers(applyMiddleware(thunkMiddleware))
+);
+export default store;
