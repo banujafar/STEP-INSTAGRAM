@@ -1,13 +1,15 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "../../components/site/Header";
 
 const SiteLayout = () => {
   return (
-    <div>
-        <p>SiteLayout</p>
-        <Outlet/>
-    </div>
-  )
-}
+    <>
+      <Header />
+    
+      <Outlet />
+    </>
+  );
+};
 
-export default SiteLayout
+export default SiteLayout;
