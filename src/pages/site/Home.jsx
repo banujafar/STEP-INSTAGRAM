@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUsers } from "../../store/actions/userList";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserFeed } from "../../store/feedSlice";
-import store from "../../store";
+
 import FeedPost from "../../components/site/FeedPost";
 import Suggestions from "../../components/site/Suggestions";
 
