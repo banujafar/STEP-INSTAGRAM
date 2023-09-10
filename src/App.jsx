@@ -10,7 +10,7 @@ const App = () => {
   const {modals} = useSelector(state => state.modal)
   return (
     <>
-      
+    
       <RouterProvider router={appRouter}/>
     
     </>

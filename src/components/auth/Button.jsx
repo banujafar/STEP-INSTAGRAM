@@ -7,6 +7,7 @@ const Button = ({disabled, children }) => {
     <button
       disabled={disabled}
       type="submit"
+      
       className={classNames(
         "bg-[#0095F6]    text-white font-medium  disabled:bg-opacity-80  rounded-md w-full h-9 mt-2",
         {

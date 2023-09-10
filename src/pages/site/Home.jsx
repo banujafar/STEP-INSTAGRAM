@@ -11,10 +11,9 @@ const Home = (props) => {
   console.log(props)
   const dispatch = useDispatch();
   const { feedData, loading, error } = useSelector((state) => state.feed);
-
+  const {token} = useSelector(state => state.auth)
   useEffect(() => {
-    dispatch(fetchUserFeed());
-    handleDeleteModal()
+    dispatch(fetchUserFeed(token));
   }, [dispatch]);
 
   if (loading) {

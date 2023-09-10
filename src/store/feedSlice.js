@@ -8,11 +8,11 @@ const initialState = {
   error: null,
 };
 
-const token = "ec8bd96c25fb46319cdf49779182333c";
+
 
 export const fetchUserFeed = createAsyncThunk(
   "feed/fetchUserFeed",
-  async (_, thunkAPI) => {
+  async (token, thunkAPI) => {
     try {
       const response = await fetch(
         "https://instagram.brightly-shining.cloud/api/v1/user/feed",
@@ -67,7 +67,7 @@ export const followUser = createAsyncThunk(
 
 export const unfollowUser = createAsyncThunk(
   "feed/unfollowUser",
-  async (username, thunkAPI) => {
+  async (username,token, thunkAPI) => {
    try {
 
       const response = await fetch(
