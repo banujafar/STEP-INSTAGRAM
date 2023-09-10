@@ -1,9 +1,11 @@
 import React from 'react'
 import {GoHomeFill, GoHome} from "react-icons/go"
-import {PiMessengerLogoFill, PiMessengerLogoLight} from "react-icons/pi"
-import {AiTwotoneHeart, AiOutlineHeart} from "react-icons/ai"
+
+import {FaUserCircle, FaRegUserCircle} from "react-icons/fa"
 
 import { NavLink } from 'react-router-dom'
+import store from '../../store'
+import { logOut } from '../../store/authSlice'
 const Navbar = () => {
 
     const itemList = [
@@ -14,16 +16,10 @@ const Navbar = () => {
             notActive: GoHome,
         },
         {
-            id: 2,
-            href: '/messenger',
-            active: PiMessengerLogoFill,
-            notActive: PiMessengerLogoLight,
-        },
-        {
-            id: 3,
-            href: '/likes',
-            active: AiTwotoneHeart,
-            notActive: AiOutlineHeart,
+          id: 2,
+          href: '/user',
+          active: FaUserCircle,
+          notActive: FaRegUserCircle
         }
     ]
   return (
@@ -31,8 +27,10 @@ const Navbar = () => {
         {itemList.map(item => (
             <NavbarItem  item={item} key={item.id}/>
         ))}
-        <p>Profile Image component</p>
+ 
 
+
+          <button onClick={() => store.dispatch(logOut())}>Logout for now</button>
     </nav>
   )
 }

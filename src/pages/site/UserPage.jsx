@@ -1,24 +1,22 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../store/userProfileSlice";
+import React from "react";
+import {  useSelector } from "react-redux";
+
 import { PostList, UserInfo } from "../../components/features/UserProfile";
+import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
 
 const UserPage = () => {
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.userProfile);
-  const userName = "alexbird"; //TODO!! will be changed,
 
-  useEffect(() => {
-    dispatch(fetchUser(userName));
-  }, [dispatch]);
+  const {username} = useSelector(state => state.auth)
+  const {isLoading, isError,  error} = useGetCurrentUserQuery(username)
+
 
   return (
     <div className="my-16">
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center">Loading...</div>
-      ) : error ? (
+      ) : isError ? (
         <div className="flex justify-center items-center">
-          Error happened: {error}
+          Error happened: {error.data.detail}
         </div>
       ) : (
         <>
