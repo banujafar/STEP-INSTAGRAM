@@ -1,17 +1,16 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunkMiddleware from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
-import userProfileReducer from "./userProfileSlice";
 
-const composeEnhancers =
-  (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
+import authReducer from "./authSlice";
+import { apiSlice } from "./api/apiSlice";
+import modalReducer from "./modalSlice";
+const store = configureStore({
+    reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer,
+        auth: authReducer,
 
-const store = configureStore(
-  {
-    reducer: { userProfile: userProfileReducer },
-  },
-  composeEnhancers(applyMiddleware(thunkMiddleware))
-);
+        modal: modalReducer
+    },
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiSlice.middleware),
+    devTools: true
+});
 export default store;
