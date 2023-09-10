@@ -5,8 +5,10 @@ import { fetchUserFeed } from "../../store/feedSlice";
 
 import FeedPost from "../../components/site/FeedPost";
 import Suggestions from "../../components/site/Suggestions";
+import { handleDeleteModal } from "../../utils/modal";
 
-const Home = () => {
+const Home = (props) => {
+  console.log(props)
   const dispatch = useDispatch();
   const { feedData, loading, error } = useSelector((state) => state.feed);
   const {token} = useSelector(state => state.auth)
@@ -36,6 +38,7 @@ const Home = () => {
           comments={post.comments}
           likes={post.likes}
           postId={post.postId}
+          history={props.history}
         />
       ))}
     </div>

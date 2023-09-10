@@ -1,10 +1,21 @@
 import React from "react";
+import { handleDeleteModal } from "../../utils/modal";
+import { useNavigate, useParams } from "react-router";
 
 const ModalLayout = ({ children }) => {
+  const navigate = useNavigate();
+  const { username } = useParams();
   return (
-    <div className="w-full h-full fixed z-50 bg-black/40 top-0 left-0 flex items-center justify-center">
-      {children}
-    </div>
+    <>
+    {children}
+      <div
+        className="w-full h-full fixed bg-black/40 top-0 left-0 flex items-center justify-center cursor-pointer"
+        onClick={() => {
+          console.log(1)
+          handleDeleteModal();
+        }}
+      ></div>
+    </>
   );
 };
 
