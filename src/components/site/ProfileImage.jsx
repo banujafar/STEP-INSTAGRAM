@@ -17,7 +17,7 @@ const ProfileImage = ({ username, imageUrl, size, className, hasStory }) => {
   // Define the gradient story border style
   const storyBorder =
     hasStory &&
-    "border-4 border-gradient-blue-purple absolute top-0 left-0 w-full h-full rounded-full border-gradient-to-b from-purple-500 to-pink-500";
+    "border-4 border-gradient-blue-purple absolute top-0 left-0 w-full h-full rounded-full ";
 
   return (
     <div className={`${sizeClass} rounded-full overflow-hidden relative ${className} `}>

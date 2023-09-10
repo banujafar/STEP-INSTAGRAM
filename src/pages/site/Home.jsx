@@ -1,30 +1,50 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getUsers } from "../../store/actions/userList";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchUserFeed } from "../../store/feedSlice";
 import store from "../../store";
+import FeedPost from "../../components/site/FeedPost";
+import Suggestions from "../../components/site/Suggestions";
 
 const Home = () => {
-  // const { users, loading, error } = useSelector((state) => state.userList);
-  //   const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(getUsers())
-  // }, []);
+  const dispatch = useDispatch();
+  const { feedData, loading, error } = useSelector((state) => state.feed);
+
+  useEffect(() => {
+    dispatch(fetchUserFeed());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div>
-      {/* {!!loading && <h1 className="px-3 py-4 rounded-md bg-yellow-500 text-like-white flex items-center justify-center text-3xl font-semibold">Loading...</h1>}
-      {!!error && <h1>Something went wrong</h1>} 
-      {!!users &&
-        users.map((user) => (
-          <div>
-            <p>
-              {user.id}. {user.firstName} {user.lastName}
-            </p>
-            <p>Followers: {user.followers}</p>
-            <br />
-            <br />
-          </div>
-        ))} */}
+    <div className="grid grid-cols-3 gap-4 my-4">
+    <div className="col-start-2 col-span-2">
+      {feedData.map((post) => (
+        <FeedPost
+          key={post.postId}
+          username={post.authorUsername}
+          imageUrl={post.imageUrl}
+          location={post.location}
+          postImageUrl={post.imageUrl}
+          caption={post.caption}
+          comments={post.comments}
+          likes={post.likes}
+          postId={post.postId}
+        />
+      ))}
     </div>
+    <div className="col-start-3 col-span-1">
+      <Suggestions />
+    </div>
+  </div>
+  
+  
   );
 };
 

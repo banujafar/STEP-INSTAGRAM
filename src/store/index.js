@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
 import userProfileReducer from "./userProfileSlice";
+import feedReducer from "./feedSlice";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -10,7 +11,10 @@ const composeEnhancers =
 
 const store = configureStore(
   {
-    reducer: { userProfile: userProfileReducer },
+    reducer: { 
+      userProfile: userProfileReducer ,
+      feed: feedReducer,
+    },
   },
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );

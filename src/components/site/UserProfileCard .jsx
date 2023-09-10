@@ -4,7 +4,7 @@ import ProfileImage from "./ProfileImage"; // Assuming you have a ProfileImage c
 const UserProfileCard = ({ username, imageUrl, location, bio }) => {
 
   return (
-    <div className="bg-white p-4 rounded-md shadow-md">
+    <div className="px-2">
       <div className="flex items-center space-x-4">
         <ProfileImage username={username} imageUrl={imageUrl} hasStory={true} />
         <div>
