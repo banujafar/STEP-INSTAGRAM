@@ -4,10 +4,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
-const UserInfo = () => {
-  const {userData} = useSelector((state) => state.auth);
-
-
+const UserInfo = ({userData}) => {
+ 
   //TODO!! WILL BE CHANGED
   const [sub, setSub] = useState(false);
   console.log(userData)

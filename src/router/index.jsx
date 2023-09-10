@@ -7,6 +7,8 @@ import Register from "../pages/auth/Register";
 import SiteLayout from "../pages/site/SiteLayout";
 import PrivateRoute from "../components/auth/PrivateRoute";
 import MainLayout from "../pages/MainLayout";
+import ModalLayout from "../components/modals/ModalLayout";
+import PostModal from "../components/modals/PostModal";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,8 +46,19 @@ const appRouter = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: "user",
+            path: "/:username",
             element: <UserPage />,
+            // children: [
+            //   // Add the route for the modal here
+            //   {
+            //     path: "/:postId",
+            //     element: (
+            //       <ModalLayout>
+            //         <PostModal />
+            //       </ModalLayout>
+            //     ),
+            //   },
+            // ],
           },
         ],
       },

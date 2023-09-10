@@ -28,7 +28,7 @@ const Header = () => {
     }
   }, [isLoading, dispatch, user?.data, isError]);
 
-  if (isLoading) return <InstagramLoader/>;
+  if (isLoading) return <InstagramLoader />;
   return (
     <header className="bg-white shadow-md">
       <div className="container mx-auto w-3/5 py-3 flex items-center justify-between">
@@ -65,7 +65,7 @@ const Header = () => {
         </Formik>
 
         {/* Navigation */}
-        <Navbar />
+        <Navbar username={username} />
       </div>
     </header>
   );
