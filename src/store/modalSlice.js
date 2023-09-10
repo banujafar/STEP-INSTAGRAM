@@ -15,7 +15,7 @@ const modalSlice = createSlice({
             state.modals.push(action.payload)
         },
         deleteModal: (state) => {
-            state.modals.slice(0, state.modals.length - 1)
+            state.modals.pop()
         }
     }
 })

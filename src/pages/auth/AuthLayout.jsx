@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+
 import { Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
@@ -15,10 +15,10 @@ const AuthLayout = () => {
       imagesRef.current.children[i].classList.remove("opacity-0");
       imagesRef.current.children[i].classList.add("opacity-100");
     };
-    setInterval(handleImages, 3000);
+    const intervalId = setInterval(handleImages, 3000);
 
     return () => {
-      clearInterval(handleImages);
+      clearInterval(intervalId);
     };
   }, []);
   return (
