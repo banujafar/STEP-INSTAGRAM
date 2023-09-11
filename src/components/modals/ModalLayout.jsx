@@ -11,7 +11,6 @@ const ModalLayout = ({ children }) => {
       <div
         className="w-full h-full fixed bg-black/40 top-0 left-0 flex items-center justify-center cursor-pointer"
         onClick={() => {
-          console.log(1)
           handleDeleteModal();
         }}
       ></div>

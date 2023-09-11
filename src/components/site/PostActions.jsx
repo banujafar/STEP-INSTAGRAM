@@ -14,6 +14,7 @@ import {
 } from "../../store/api/postApiSlice";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
 
 export const IconSection = ({ icons, count }) => (
   <div className="flex   justify-start flex-col">
@@ -55,13 +56,15 @@ const Comment = ({ comment }) => (
 
 const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
   const [likePost] = useLikePostMutation();
-  const { username } = useSelector((state)=>state.auth);
-  const liked = likes.filter((item) => item.authorUsername === username);
+  const { username } = useParams();
+  const profilename = useSelector((state) => state.auth.username);
+  const liked = likes.filter((item) => item.authorUsername === profilename);
   const [isLiked, setIsLiked] = useState(() =>
     liked.length === 0 ? false : true
   );
   const [deletePost] = useDeletePostMutation();
   const { refetch } = useGetCurrentPostQuery(postId);
+  const refetchUser = useGetCurrentUserQuery(username).refetch;
 
   const toggleLike = async () => {
     setIsLiked((prev) => !prev);
@@ -71,8 +74,8 @@ const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
       await likePost({ postId }).unwrap();
     }
     refetch();
+    refetchUser();
   };
-
   return (
     <>
       <CommentSection
@@ -81,7 +84,7 @@ const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
         caption={caption}
       />
 
-      <div className="border-b-gray-100 border-b-2 pb-20 h-full ">
+      <div className="border-b-gray-100 border-b-2 pb-20 h-full overflow-y-scroll">
         {!!comments &&
           comments.map((comment, index) => (
             <Comment comment={comment} key={index} />
