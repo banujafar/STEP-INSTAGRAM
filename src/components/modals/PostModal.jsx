@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { FaUserCircle, FaHeart, FaRegComment } from "react-icons/fa";
-import { BsBookmark, BsDownload, BsThreeDots } from "react-icons/bs";
+import { FaUserCircle } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentPostQuery } from "../../store/api/postApiSlice";
-import { IconContext } from "react-icons";
-import { handleDeleteModal } from "../../utils/modal";
 import PostActions from "../site/PostActions";
 
 const UserProfile = ({ username }) => (
@@ -42,8 +39,9 @@ const PostModal = () => {
           <PostActions
             authorUsername={authorUsername}
             caption={caption}
-            likesCount={likes.length}
+            likes={likes}
             comments={comments}
+            postId={postId}
           />
           <div className="mt-3 flex items-center p-4">
             <div className="w-full relative">

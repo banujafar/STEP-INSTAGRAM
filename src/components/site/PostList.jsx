@@ -6,7 +6,7 @@ import PostCard from "./PostCard";
 
 const PostList = ({userData}) => {
   const posts = userData.posts;
-  
+
   return (
     <div className="post-list flex flex-wrap w-full justify-start max-w-4xl mx-auto z-10">
       {posts?.map((post, index) => (
