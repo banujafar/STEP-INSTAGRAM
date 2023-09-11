@@ -23,10 +23,11 @@ const baseQueryWithJWT = async (args, api, extraOptions) => {
     if (result?.error?.status === 401) {
         toast.error("Session is expired")
         api.dispatch(logOut())
-    } else if (result?.error?.status === 400) {
-        toast.error(result.error.data.detail)
-        api.dispatch(logOut())
     }
+    // } else if (result?.error?.status === 400) {
+    //     toast.error(result.error.data.detail)
+    //     api.dispatch(logOut())
+    // }
  
 
     return result

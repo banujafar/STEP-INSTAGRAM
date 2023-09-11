@@ -30,6 +30,7 @@ export const fetchUserFeed = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log(data)
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
