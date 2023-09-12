@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import {
   FaHeart,
   FaRegComment,
@@ -6,27 +6,31 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { BsBookmark, BsDownload } from "react-icons/bs";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import {
+  useDeletePostMutation,
+  useGetCurrentPostQuery,
+  useLikePostMutation,
+} from "../../store/api/postApiSlice";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
 
-const IconSection = ({ icons, count }) => (
-  <div className="flex  space-x-2 justify-start flex-col">
-    <div className="flex items-center space-x-2">
+export const IconSection = ({ icons, count }) => (
+  <div className="flex   justify-start flex-col">
+    <div className="flex items-center space-x-4">
       {icons.map(({ icon }, index) => (
-        <button
-          className="flex items-center space-x-2 text-gray-600"
-          key={index}
-        >
+        <button className="flex items-center  text-gray-600" key={index}>
           {icon}
         </button>
       ))}
     </div>
-    {count && <span className="mt-2">{count} likes</span>}
   </div>
 );
 
 const CommentSection = ({ comments, authorUsername, caption }) => (
   <div className="flex gap-2 items-center px-4 pt-4">
-    {!!comments.length ? (
+    {!!comments ? (
       <>
         <FaUserCircle size={"32px"} />
         <p className="text-l">
@@ -50,36 +54,72 @@ const Comment = ({ comment }) => (
   </div>
 );
 
-const PostActions = ({ likesCount, comments, authorUsername, caption }) => (
-  <>
-    <CommentSection
-      comments={comments}
-      authorUsername={authorUsername}
-      caption={caption}
-    />
+const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
+  const [likePost] = useLikePostMutation();
+  const { username } = useParams();
+  const profilename = useSelector((state) => state.auth.username);
+  const liked = likes.filter((item) => item.authorUsername === profilename);
+  const [isLiked, setIsLiked] = useState(() =>
+    liked.length === 0 ? false : true
+  );
+  const [deletePost] = useDeletePostMutation();
+  const { refetch } = useGetCurrentPostQuery(postId);
+  const refetchUser = useGetCurrentUserQuery(username).refetch;
 
-    <div className="border-b-gray-100 border-b-2 pb-20 h-full ">
-      {!!comments &&
-        comments.map((comment, index) => (
-          <Comment comment={comment} key={index} />
-        ))}
-    </div>
-    <div className="flex justify-between space-x-4 w-full px-4 mt-2">
-      <div className="flex items-center space-x-4 ">
-        <IconSection
-          icons={[
-            { icon: <AiOutlineHeart className="text-2xl" /> },
-            {
-              icon: <FaRegComment className="text-2xl" />,
-            },
-            { icon: <BsDownload className="text-2xl" /> },
-          ]}
-          count={likesCount}
-        />
+  const toggleLike = async () => {
+    setIsLiked((prev) => !prev);
+    if (isLiked) {
+      await deletePost({ postId }).unwrap();
+    } else {
+      await likePost({ postId }).unwrap();
+    }
+    refetch();
+    refetchUser();
+  };
+  return (
+    <>
+      <CommentSection
+        comments={comments}
+        authorUsername={authorUsername}
+        caption={caption}
+      />
+
+      <div className="border-b-gray-100 border-b-2 pb-20 h-full overflow-y-scroll">
+        {!!comments &&
+          comments.map((comment, index) => (
+            <Comment comment={comment} key={index} />
+          ))}
       </div>
-      <IconSection icons={[{ icon: <BsBookmark className="text-2xl" /> }]} />
-    </div>
-  </>
-);
-
+      <div className="flex justify-between space-x-4 w-full px-4 mt-2">
+        <div className="flex">
+          <div className="flex flex-col">
+            <button
+              className="flex  space-x-2 text-gray-600"
+              onClick={toggleLike}
+            >
+              {isLiked ? (
+                <AiFillHeart className="text-2xl" />
+              ) : (
+                <AiOutlineHeart className="text-2xl" />
+              )}
+            </button>
+            {!!likes?.length && (
+              <span className="mt-2">{likes.length} likes</span>
+            )}
+          </div>
+          <IconSection
+            icons={[
+              {
+                icon: <FaRegComment className="text-2xl" />,
+              },
+              { icon: <BsDownload className="text-2xl" /> },
+            ]}
+            count={likes.length}
+          />
+        </div>
+        <IconSection icons={[{ icon: <BsBookmark className="text-2xl" /> }]} />
+      </div>
+    </>
+  );
+};
 export default PostActions;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
 import UserInfo from "../../components/site/UserInfo";
@@ -12,7 +12,7 @@ const UserPage = () => {
   const { username } = useParams();
 
   const { isLoading, isError, error, data } = useGetCurrentUserQuery(username);
-  
+
   return (
     <div className="my-16">
       {isLoading ? (

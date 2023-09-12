@@ -48,17 +48,6 @@ const appRouter = createBrowserRouter([
           {
             path: "/:username",
             element: <UserPage />,
-            // children: [
-            //   // Add the route for the modal here
-            //   {
-            //     path: "/:postId",
-            //     element: (
-            //       <ModalLayout>
-            //         <PostModal />
-            //       </ModalLayout>
-            //     ),
-            //   },
-            // ],
           },
         ],
       },
