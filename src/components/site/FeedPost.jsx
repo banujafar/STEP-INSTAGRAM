@@ -17,6 +17,7 @@ const FeedPost = ({
   postId,
 }) => {
   const { username, token } = useSelector((state) => state.auth);
+
   const [liked, setLiked] = useState(
     likes?.some((like) => like.authorUsername === username)
   );
@@ -187,14 +188,14 @@ const FeedPost = ({
         } others`}</p>
       )}
       <div className="p-2">
-        <div className="flex items-center">
+     { caption &&  <div className="flex items-center">
           <span className="text-neutral-800 text-[14px] font-semibold leading-[18px]">
             {userName}
           </span>
           <span className="text-neutral-800 text-opacity-60 text-[14px] font-normal ml-2 leading-[18px]">
             {caption}
           </span>
-        </div>
+        </div>}
         <div className="mt-2">
           {postComments
             .slice(0, showAllComments ? undefined : 1)

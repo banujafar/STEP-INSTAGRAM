@@ -1,5 +1,5 @@
 import React from "react";
-
+import { FaUserCircle } from "react-icons/fa";
 const ProfileImage = ({ username, imageUrl, size, className, hasStory }) => {
   const sizeToClassName = {
     6: "w-6 h-6",
@@ -22,11 +22,13 @@ const ProfileImage = ({ username, imageUrl, size, className, hasStory }) => {
   return (
     <div className={`${sizeClass} rounded-full overflow-hidden relative ${className} `}>
       {hasStory && <div className={storyBorder}></div>}
-      <img
+     {imageUrl ? (<img
         src={imageUrl}
         alt={`${username}'s profile picture`}
         className="w-full h-full object-cover rounded-full"
-      />
+      />) : (
+        <FaUserCircle size={size} className={`${sizeClass}`}/>
+      )}
     </div>
   );
 };
