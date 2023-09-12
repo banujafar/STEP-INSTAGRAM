@@ -4,7 +4,6 @@ import authReducer from "./authSlice";
 import { apiSlice } from "./api/apiSlice";
 import modalReducer from "./modalSlice";
 import feedReducer from "./feedSlice";
-
 const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
