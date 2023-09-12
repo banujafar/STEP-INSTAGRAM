@@ -1,21 +1,21 @@
-// feedSlice.js
+// userSlice.js
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  feedData: [],
+  userData: [],
   loading: false,
   error: null,
 };
 
 const token = window.localStorage.getItem('access-token') || null;
 
-export const fetchUserFeed = createAsyncThunk(
-  "feed/fetchUserFeed",
+export const fetchAllUsers = createAsyncThunk(
+  "users/fetchAllUsers",
   async (_, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://instagram.brightly-shining.cloud/api/v1/user/feed",
+        "https://your-api-endpoint-for-all-users",
         {
           method: "GET",
           headers: {
@@ -26,11 +26,10 @@ export const fetchUserFeed = createAsyncThunk(
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch user feed");
+        throw new Error("Failed to fetch all users");
       }
 
       const data = await response.json();
-      console.log(data)
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -38,28 +37,26 @@ export const fetchUserFeed = createAsyncThunk(
   }
 );
 
-
-
-const feedSlice = createSlice({
-  name: "feed",
+const allUsersSlice = createSlice({
+  name: "users",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchUserFeed.pending, (state) => {
+    builder.addCase(fetchAllUsers.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchUserFeed.fulfilled, (state, action) => {
+    builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
       state.loading = false;
-      state.feedData = action.payload;
+      state.userData = action.payload;
       state.error = null;
     });
-    builder.addCase(fetchUserFeed.rejected, (state, action) => {
+    builder.addCase(fetchAllUsers.rejected, (state, action) => {
       state.loading = false;
-      state.feedData = [];
+      state.userData = [];
       state.error = action.payload;
     });
   },
 });
 
-export const feedActions = feedSlice.actions;
+export const userActions = allUsersSlice.actions;
 
-export default feedSlice.reducer;
+export default allUsersSlice.reducer;
