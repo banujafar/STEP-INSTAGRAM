@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentPostQuery } from "../../store/api/postApiSlice";
-import PostActions from "../site/PostActions";
+import PostActions from "../site/PostActions/PostActions";
+import AddComment from "../site/PostActions/AddComment";
 
 const UserProfile = ({ username }) => (
   <div className="flex gap-2 items-center">
@@ -16,7 +17,6 @@ const PostModal = () => {
   const { modals } = useSelector((state) => state.modal);
   const { postId } = modals[0].data;
   const { data } = useGetCurrentPostQuery(postId);
-  const [comment, setComment] = useState("");
 
   if (!data) {
     return null;
@@ -43,18 +43,7 @@ const PostModal = () => {
             comments={comments}
             postId={postId}
           />
-          <div className="mt-3 flex items-center p-4">
-            <div className="w-full relative">
-              <input
-                placeholder="Add a comment..."
-                className="w-full h-6 font-roboto bg-transparent p-0 border-none text-gray-600 flex-grow font-inherit h-30 max-h-80 outline-none resize-none"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></input>
-            </div>
-
-            <button className="cursor-pointer">Post</button>
-          </div>
+         <AddComment postId={postId}/>
         </div>
       </div>
     </div>
