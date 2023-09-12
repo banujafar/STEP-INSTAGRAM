@@ -5,15 +5,13 @@ import { fetchUserFeed } from "../../store/feedSlice";
 
 import FeedPost from "../../components/site/FeedPost";
 import Suggestions from "../../components/site/Suggestions";
-import { handleDeleteModal } from "../../utils/modal";
 
-const Home = (props) => {
-  console.log(props)
+const Home = () => {
   const dispatch = useDispatch();
   const { feedData, loading, error } = useSelector((state) => state.feed);
-  const {token} = useSelector(state => state.auth)
+
   useEffect(() => {
-    dispatch(fetchUserFeed(token));
+    dispatch(fetchUserFeed());
   }, [dispatch]);
 
   if (loading) {
@@ -30,7 +28,7 @@ const Home = (props) => {
       {feedData.map((post) => (
         <FeedPost
           key={post.postId}
-          username={post.authorUsername}
+          userName={post.authorUsername}
           imageUrl={post.imageUrl}
           location={post.location}
           postImageUrl={post.imageUrl}
@@ -38,7 +36,6 @@ const Home = (props) => {
           comments={post.comments}
           likes={post.likes}
           postId={post.postId}
-          history={props.history}
         />
       ))}
     </div>

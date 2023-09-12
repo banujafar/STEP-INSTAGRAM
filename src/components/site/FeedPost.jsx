@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import UserProfileCard from "./UserProfileCard ";
-import Heart from "../../assets/icons/heart.svg";
 import Comment from "../../assets/icons/comment.svg";
 import Save from "../../assets/icons/save.svg";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
-import HeartFilled from "../../assets/icons/heartFilled.svg";
 const FeedPost = ({
-  username,
+  userName,
   imageUrl,
   location,
   postImageUrl,
@@ -15,13 +16,17 @@ const FeedPost = ({
   likes,
   postId,
 }) => {
-  const [liked, setLiked] = useState(false);
+  const { username, token } = useSelector((state) => state.auth);
+  const [liked, setLiked] = useState(
+    likes?.some((like) => like.authorUsername === username)
+  );
+
   const [showAllComments, setShowAllComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [postComments, setPostComments] = useState(comments);
+  const [likeCount, setLikeCount] = useState(likes.length);
   const commentInputRef = useRef(null);
 
-  const token = "ec8bd96c25fb46319cdf49779182333c";
   const handleLike = async () => {
     try {
       const response = await fetch(
@@ -30,7 +35,7 @@ const FeedPost = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer ec8bd96c25fb46319cdf49779182333c",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ postId }),
         }
@@ -38,6 +43,7 @@ const FeedPost = ({
 
       if (response.ok) {
         setLiked(true);
+        setLikeCount(likeCount + 1);
       }
     } catch (error) {
       console.error("Error liking post:", error);
@@ -59,6 +65,7 @@ const FeedPost = ({
 
       if (response.ok) {
         setLiked(false);
+        setLikeCount(likeCount - 1);
       }
     } catch (error) {
       console.error("Error removing like:", error);
@@ -76,7 +83,6 @@ const FeedPost = ({
   };
 
   const handleComment = async () => {
-
     if (!newComment.trim()) {
       return;
     }
@@ -104,21 +110,48 @@ const FeedPost = ({
     }
   };
 
-  const handleShowAllComments = () => {
-    setShowAllComments(true);
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await fetch(
+        `https://instagram.brightly-shining.cloud/api/v1/post/comment?commentId=${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Remove the deleted comment from the state
+        setPostComments(
+          postComments.filter((comment) => comment.commentId !== commentId)
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
   };
+
+  // const handleShowAllComments = () => {
+  //   setShowAllComments(true);
+  // };
 
   const handleCommentIconClick = () => {
     if (commentInputRef.current) {
       commentInputRef.current.focus();
     }
   };
-  
+
+  const handleShowAllComments = () => {
+    setShowAllComments(!showAllComments);
+  };
 
   return (
     <div className="border border-gray-300 bg-white py-1 rounded-md shadow-md mb-4 w-[40%]">
       <UserProfileCard
-        username={username}
+        username={userName}
         imageUrl={imageUrl}
         location={location}
       />
@@ -132,9 +165,13 @@ const FeedPost = ({
         />
       </div>
       <div className="mt-2 p-2 flex justify-between">
-        <div className="">
-          <button className="mr-2" onClick={toggleLike}>
-            <img src={liked ? HeartFilled : Heart} alt="heart" />
+        <div className="flex items-center">
+          <button className="mr-2 hover:opacity-60 duration-300" onClick={toggleLike}>
+            {liked ? (
+              <AiFillHeart style={{ color: "red" }} size={30} />
+            ) : (
+              <AiOutlineHeart size={30} />
+            )}
           </button>
           <button onClick={handleCommentIconClick}>
             <img src={Comment} alt="Comment" />
@@ -144,10 +181,15 @@ const FeedPost = ({
           <img src={Save} alt="Save" />
         </div>
       </div>
-      <div className="mt-2 p-2">
+      {likes.length > 0 && (
+        <p className="p-2">{`liked by ${likes[0].authorUsername} and ${
+          likeCount - 1
+        } others`}</p>
+      )}
+      <div className="p-2">
         <div className="flex items-center">
           <span className="text-neutral-800 text-[14px] font-semibold leading-[18px]">
-            {username}
+            {userName}
           </span>
           <span className="text-neutral-800 text-opacity-60 text-[14px] font-normal ml-2 leading-[18px]">
             {caption}
@@ -157,17 +199,25 @@ const FeedPost = ({
           {postComments
             .slice(0, showAllComments ? undefined : 1)
             .map((comment) => (
-              <div key={comment.commentId} className="mb-1">
-                <span className="font-semibold">{comment.authorUsername}</span>:{" "}
-                {comment.text}
-              </div>
+              <div key={comment.commentId} className="mb-1 flex justify-between">
+                <div>
+                   <span className="font-semibold">{comment.authorUsername}</span>:{" "}
+              {comment.text}
+                </div>
+             
+              {comment.authorUsername === username && (
+                <button onClick={() => handleDeleteComment(comment.commentId)} className="hover:opacity-60 duration-300">
+                  <RiDeleteBin6Line size={20} />
+                </button>
+              )}
+            </div>
             ))}
-          {postComments.length > 1 && !showAllComments && (
+          {postComments.length > 1 && (
             <button
               onClick={handleShowAllComments}
               className="text-blue-500 font-semibold cursor-pointer"
             >
-              Show more
+              {showAllComments ? "Show Less" : "Show More"}
             </button>
           )}
         </div>
@@ -182,10 +232,7 @@ const FeedPost = ({
             ></input>
           </div>
 
-          <button
-            onClick={handleComment}
-            className=" cursor-pointer"
-          >
+          <button onClick={handleComment} className=" cursor-pointer hover:opacity-60 duration-300">
             Post
           </button>
         </div>

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { followUser, unfollowUser } from '../../store/feedSlice'; 
 
-const UserCardSuggestion = ({ user, currentUser, token }) => {
-  const dispatch = useDispatch();
+const UserCardSuggestion = ({ user, currentUser }) => {
   const isFollowing = currentUser.following.includes(user.username);
 
   const handleFollowClick = () => {

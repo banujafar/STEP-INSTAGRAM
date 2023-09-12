@@ -8,11 +8,11 @@ const initialState = {
   error: null,
 };
 
-
+const token = window.localStorage.getItem('access-token') || null;
 
 export const fetchUserFeed = createAsyncThunk(
   "feed/fetchUserFeed",
-  async (token, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       const response = await fetch(
         "https://instagram.brightly-shining.cloud/api/v1/user/feed",
