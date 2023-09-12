@@ -12,14 +12,25 @@ export const postApiSlice = apiSlice.injectEndpoints({
         body: { postId },
       }),
     }),
-    deletePost:builder.mutation({
-      query:({postId})=>({
-        url:`/post/like?postId=${postId}`,
-        method:'DELETE'
-
-      })
-    })
+    deletePost: builder.mutation({
+      query: ({ postId }) => ({
+        url: `/post/like?postId=${postId}`,
+        method: "DELETE",
+      }),
+    }),
+    addComment: builder.mutation({
+      query: ({ postId, text }) => ({
+        url: "/post/comment",
+        method: "POST",
+        body: { postId, text },
+      }),
+    }),
   }),
 });
 
-export const { useGetCurrentPostQuery, useLikePostMutation,useDeletePostMutation } = postApiSlice;
+export const {
+  useGetCurrentPostQuery,
+  useLikePostMutation,
+  useDeletePostMutation,
+  useAddCommentMutation,
+} = postApiSlice;

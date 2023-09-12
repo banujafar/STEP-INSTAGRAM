@@ -1,16 +1,11 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
 import UserInfo from "../../components/site/UserInfo";
 import PostList from "../../components/site/PostList";
-import ModalLayout from "../../components/modals/ModalLayout";
-import PostModal from "../../components/modals/PostModal";
 import { useParams } from "react-router";
 
 const UserPage = () => {
-  //const { username } = useSelector((state) => state.auth);
   const { username } = useParams();
-
   const { isLoading, isError, error, data } = useGetCurrentUserQuery(username);
 
   return (
