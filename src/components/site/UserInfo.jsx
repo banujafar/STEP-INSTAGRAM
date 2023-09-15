@@ -15,17 +15,27 @@ const UserInfo = ({ userData }) => {
   const { username } = useParams();
   const { username: profilename } = useSelector((state) => state.auth);
   const isCurrentUser = profilename === username;
-
+  const { subscribers, subscriptions, posts, firstName, lastName } = userData;
   const [subscribed, setSubscribed] = useState(
-    userData.subscribers.some((data) => data.username === profilename)
+    subscribers.some((data) => data.username === profilename)
   );
 
   const { refetch: refetchUser } = useGetCurrentUserQuery(username);
-  const { refetch: refetchOwnAccount } = useGetCurrentUserQuery(profilename);
+  const { data, refetch: refetchOwnAccount } =
+    useGetCurrentUserQuery(profilename);
   const [subscribe] = useSubscribeMutation();
   const [unsubscribe] = useUnsubcribeMutation();
 
-  const imageUrl = userData.posts?.map((post) => post.imageUrl);
+  const imageUrl = posts?.map((post) => post.imageUrl);
+
+  let matchingUsernames = data?.data.subscriptions.map((current) => {
+    const matchingSubscription = subscriptions.find(
+      (item) => item.username === current.username
+    );
+    return matchingSubscription ? matchingSubscription.username : null;
+  });
+
+  matchingUsernames = matchingUsernames?.filter((username) => username != null);
 
   const toggleSubscribe = async () => {
     setSubscribed(!subscribed);
@@ -43,16 +53,21 @@ const UserInfo = ({ userData }) => {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <ProfileImage
-        username={userData.username}
-        imageUrl={imageUrl}
-        size={32}
-        hasStory={true}
-      />
+    <div className="flex justify-center items-center mb-8">
+      {!!imageUrl.length ? (
+        <ProfileImage
+          username={username}
+          imageUrl={imageUrl}
+          size={32}
+          hasStory={true}
+        />
+      ) : (
+        <FaUserCircle size={140} />
+      )}
+
       <div className="flex flex-col ml-16">
         <div className="flex justify-center items-center">
-          <h1 className="text-3xl mr-2">{userData.username}</h1>
+          <h1 className="text-3xl mr-2">{username}</h1>
           <div className="border-solid border-2 border-gray-400 rounded px-4 mt-2 ml-2 mr-2">
             {isCurrentUser ? (
               "Edit profile"
@@ -71,20 +86,24 @@ const UserInfo = ({ userData }) => {
           </button>
         </div>
         <div className="flex items-center mt-3 mb-2">
-          <UserDetails details={userData.posts?.length} text={"posts"} />
-          <UserDetails
-            details={userData.subscribers?.length}
-            text={"subscribers"}
-          />
-          <UserDetails
-            details={userData.subscriptions?.length}
-            text={"subscriptions"}
-          />
+          <UserDetails details={posts?.length} text={"posts"} />
+          <UserDetails details={subscribers?.length} text={"subscribers"} />
+          <UserDetails details={subscriptions?.length} text={"subscriptions"} />
         </div>
         <span className="my-1">
-          {userData.firstName} {userData.lastName}
+          {firstName} {lastName}
         </span>
-        <span>Subscribed by {/* TODO: Will be added */}</span>
+        {!!matchingUsernames?.length && !isCurrentUser && (
+          <span>
+            Subscribed by {""}
+            {matchingUsernames.slice(0, 3).map((item, index) => (
+              <span key={index}>{item} </span>
+            ))}
+            {matchingUsernames.length > 3 && (
+              <span>+{matchingUsernames.length - 3} more</span>
+            )}
+          </span>
+        )}
       </div>
     </div>
   );
