@@ -6,7 +6,7 @@ const CommentSection = ({ comments, authorUsername, caption }) => {
   return (
     <>
       <div className="flex gap-2 items-center px-4 pt-4">
-        {!!comments ? (
+        {!!caption && (
           <>
             <FaUserCircle size={"32px"} />
             <p className="text-l">
@@ -14,15 +14,16 @@ const CommentSection = ({ comments, authorUsername, caption }) => {
               <span>{caption}</span>
             </p>
           </>
-        ) : (
-          <span className="text-center w-full">No comments yet</span>
         )}
       </div>
       <div className="border-b-gray-100 border-b-2 pb-20 h-full overflow-y-scroll">
-        {!!comments &&
+        {!!comments ? (
           comments.map((comment, index) => (
             <Comment comment={comment} key={index} />
-          ))}
+          ))
+        ) : (
+          <span className="text-center w-full">No comments yet</span>
+        )}
       </div>
     </>
   );

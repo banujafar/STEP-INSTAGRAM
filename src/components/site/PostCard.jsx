@@ -7,7 +7,7 @@ import IconSection from "./PostActions/IconSection";
 const PostCard = ({ post }) => {
   return (
     <div
-      className="w-64 h-60 mr-6 mt-12"
+      className="w-72 h-60 mr-2.5 mt-12"
       onClick={() => handleAppendModal("post modal", { postId: post.postId })}
     >
       <div className="w-full h-full relative group/item shadow-lg cursor-pointer">
