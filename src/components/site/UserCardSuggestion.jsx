@@ -10,7 +10,7 @@ const UserCardSuggestion = ({ user, isSubscriber }) => {
   const currentUserName = useSelector((state) => state.auth.username);
   const { isLoading, isError, error, data } = useGetCurrentUserQuery(currentUserName);
   const currentUser = data.data;
-  const [sub, setSub] = useState(isSubscriber); // Initialize with the isSubscriber prop
+  const [sub, setSub] = useState(isSubscriber);
   const userName = useSelector((state) => state.auth.username);
   const { refetch } = useGetCurrentUserQuery(userName);
   const [subscribe] = useSubscribeMutation();

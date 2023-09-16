@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileImage from "./ProfileImage"; // Assuming you have a ProfileImage component
+import ProfileImage from "./ProfileImage";
 import { Link, useNavigate } from "react-router-dom";
 
 const UserProfileCard = ({ username, imageUrl, location, bio }) => {

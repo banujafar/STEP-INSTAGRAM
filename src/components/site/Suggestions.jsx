@@ -7,7 +7,7 @@ const Suggestions = () => {
   const { username } = useSelector((state) => state.auth);
   const { isLoading, isError, error, data } = useGetCurrentUserQuery(username);
 
-  // Initialize two lists: one for subscribers and one for non-subscribers
+
   const [subscribers, setSubscribers] = useState([]);
   const [nonSubscribers, setNonSubscribers] = useState([]);
 
