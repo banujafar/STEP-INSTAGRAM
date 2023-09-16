@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserCardSuggestion from "../../components/site/UserCardSuggestion";
 import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
-
+import Footer from "./Footer";
 const Suggestions = () => {
   const { username } = useSelector((state) => state.auth);
   const { isLoading, isError, error, data } = useGetCurrentUserQuery(username);
@@ -72,6 +72,7 @@ const Suggestions = () => {
           </>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };

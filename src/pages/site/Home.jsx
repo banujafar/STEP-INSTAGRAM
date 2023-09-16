@@ -27,10 +27,10 @@ const Home = () => {
 
   return (
     <div className="grid grid-cols-3 gap-4 my-4">
-      {/* Left empty column */}
+
       <div className="col-start-1 col-span-1"></div>
 
-      {/* Centered post feed */}
+
       <div className="col-start-2 col-span-1">
         {feedData.map((post) => (
           <FeedPost
@@ -47,7 +47,6 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Subscribers list on the right */}
       <div className="col-start-3 col-span-1">
         <Suggestions />
       </div>
