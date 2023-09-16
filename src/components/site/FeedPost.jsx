@@ -27,6 +27,7 @@ const FeedPost = ({
   const [postComments, setPostComments] = useState(comments);
   const [likeCount, setLikeCount] = useState(likes.length);
   const commentInputRef = useRef(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleLike = async () => {
     try {
@@ -45,6 +46,8 @@ const FeedPost = ({
       if (response.ok) {
         setLiked(true);
         setLikeCount(likeCount + 1);
+        setIsAnimating(true); // Trigger the animation
+       setTimeout(() => setIsAnimating(false), 1000); 
       }
     } catch (error) {
       console.error("Error liking post:", error);
@@ -150,21 +153,29 @@ const FeedPost = ({
   };
 
   return (
-    <div className="border border-gray-300 bg-white py-1 rounded-md shadow-md mb-4 w-[40%]">
+    <div className="border border-gray-300 bg-white py-1 rounded-md shadow-md mb-4 w-full">
       <UserProfileCard
         username={userName}
         imageUrl={imageUrl}
         location={location}
       />
-      <div className="mt-4 w-full h-full object-contain">
-        <img
-          src={postImageUrl}
-          alt="Post"
-          className="w-full h-[600px] object-cover"
-          onDoubleClick={handleLike}
-          style={{ cursor: "pointer" }}
-        />
-      </div>
+   <div className="mt-4 w-full h-full object-contain relative">
+  <img
+    src={postImageUrl}
+    alt="Post"
+    className="w-full h-[600px] object-cover"
+    onDoubleClick={handleLike}
+    style={{ cursor: "pointer" }}
+  />
+  {isAnimating && (
+    <AiFillHeart
+      className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 ${
+        isAnimating ? "scale-700" : "scale-0"
+      } text-red-500 text-3xl`}
+      size={85}
+    />
+  )}
+</div>
       <div className="mt-2 p-2 flex justify-between">
         <div className="flex items-center">
           <button className="mr-2 hover:opacity-60 duration-300" onClick={toggleLike}>
