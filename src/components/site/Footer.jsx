@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="flex justify-center items-center">
           <p className="text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} Your Instagram Clone
+            &copy; {new Date().getFullYear()} Instagram Clone
           </p>
         </div>
       </div>
