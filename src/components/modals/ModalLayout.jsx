@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { handleDeleteModal } from "../../utils/modal";
-import { useNavigate, useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { clearData } from "../../store/addPostSlice";
+
 
 const ModalLayout = ({ children }) => {
-  const navigate = useNavigate();
-  const { username } = useParams();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    window.addEventListener('click', (e) => {
+
+      if (e.target.classList.value.includes('modal-layout')){
+        handleDeleteModal()
+        dispatch(clearData())
+      }
+    })
+  }, [])
   return (
     <>
-    {children}
+    
       <div
-        className="w-full h-full fixed bg-black/40 top-0 left-0 flex items-center justify-center cursor-pointer"
-        onClick={() => {
-          handleDeleteModal();
-        }}
-      ></div>
+        className="w-full h-full fixed bg-black/40 top-0 left-0 flex items-center justify-center modal-layout  z-50"
+        
+      >
+        {children}
+      </div>
     </>
   );
 };

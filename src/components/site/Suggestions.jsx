@@ -14,7 +14,7 @@ const Suggestions = () => {
   useEffect(() => {
     if (!isLoading && !isError) {
       const subscribedUsernames = data.data.subscribers.map((user) => user.username);
-    
+      
       const subscribersList = data.data.subscriptions.filter((user) =>
         subscribedUsernames.includes(user.username)
       );
@@ -22,7 +22,8 @@ const Suggestions = () => {
       const nonSubscribersList = data.data.subscribers.filter(
         (user) => !subscribersList.includes(user.username)
       );
-    
+      
+
       setSubscribers(subscribersList);
       setNonSubscribers(nonSubscribersList);
     }
@@ -53,7 +54,7 @@ const Suggestions = () => {
         )}
       </div>
       <div className="border border-gray-300 rounded-md max-h-[250px] w-[100%] overflow-y-auto">
-        <h2 className="text-lg font-semibold px-4 pt-2">Non-Subscribers</h2>
+        <h2 className="text-lg font-semibold px-4 pt-2">Recommendations for you</h2>
         {isLoading ? (
           <div className="flex justify-center items-center">Loading...</div>
         ) : isError ? (

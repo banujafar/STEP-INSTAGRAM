@@ -86,7 +86,8 @@ const FeedPost = ({
     }
   };
 
-  const handleComment = async () => {
+  const handleComment = async (e) => {
+    e.preventDefault()
     if (!newComment.trim()) {
       return;
     }
@@ -156,7 +157,7 @@ const FeedPost = ({
     <div className="border border-gray-300 bg-white py-1 rounded-md shadow-md mb-4 w-full">
       <UserProfileCard
         username={userName}
-        imageUrl={imageUrl}
+        imageUrl={''}
         location={location}
       />
    <div className="mt-4 w-full h-full object-contain relative">
@@ -192,7 +193,7 @@ const FeedPost = ({
         <div>
           <img src={Save} alt="Save" />
         </div>
-      </div>
+      </div>  
       {likes.length > 0 && (
         <p className="p-2">{`liked by ${likes[0].authorUsername} and ${
           likeCount - 1
@@ -233,7 +234,7 @@ const FeedPost = ({
             </button>
           )}
         </div>
-        <div className="mt-3 flex items-center">
+        <form onSubmit={handleComment} className="mt-3 flex items-center">
           <div className="w-full relative">
             <input
               ref={commentInputRef}
@@ -244,10 +245,10 @@ const FeedPost = ({
             ></input>
           </div>
 
-          <button onClick={handleComment} className=" cursor-pointer hover:opacity-60 duration-300">
+          <button type="submit" className=" cursor-pointer hover:opacity-60 duration-300">
             Post
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

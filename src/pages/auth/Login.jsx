@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ const Login = () => {
         replace: true
       });
     } catch (error) {
+ 
       toast.error(error.data.details)
     }
   };

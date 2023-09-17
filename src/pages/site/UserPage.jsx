@@ -6,8 +6,10 @@ import { useParams } from "react-router";
 
 const UserPage = () => {
   const { username } = useParams();
+  
   const { isLoading, isError, error, data } = useGetCurrentUserQuery(username);
 
+  
   return (
     <div className="my-16">
       {isLoading ? (
