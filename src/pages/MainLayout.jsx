@@ -25,6 +25,13 @@ const MainLayout = () => {
 
       <Toaster />
       <Outlet />
+
+
+      <style jsx="true">{
+        `
+          ${modals.length > 0 && 'body{overflow:hidden;}'}
+        `
+      }</style>
     </>
   );
 };

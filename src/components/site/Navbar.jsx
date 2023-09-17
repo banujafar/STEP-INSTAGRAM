@@ -4,9 +4,13 @@ import { GoHomeFill, GoHome } from "react-icons/go";
 import { FaUserCircle, FaRegUserCircle } from "react-icons/fa";
 
 import { NavLink } from "react-router-dom";
-import store from "../../store";
+
 import { logOut } from "../../store/authSlice";
+
+import { useDispatch } from "react-redux";
+import { BiLogOut } from "react-icons/bi";
 const Navbar = ({ username }) => {
+  const dispatch = useDispatch()
   const itemList = [
     {
       id: 1,
@@ -19,15 +23,18 @@ const Navbar = ({ username }) => {
       href: `/${username}`,
       active: FaUserCircle,
       notActive: FaRegUserCircle,
-    },
+    }
   ];
+
   return (
     <nav className="flex items-center gap-x-4">
       {itemList.map((item) => (
         <NavbarItem item={item} key={item.id} />
       ))}
-
-      <button onClick={() => store.dispatch(logOut())}>Logout for now</button>
+      <button className="ml-2" onClick={() => dispatch(logOut())}>
+        <BiLogOut size={30}/>
+      </button>
+      
     </nav>
   );
 };

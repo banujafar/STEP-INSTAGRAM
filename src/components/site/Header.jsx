@@ -1,26 +1,19 @@
 import React, { useCallback, useEffect } from "react";
-import SearchInput from "./SearchInput";
-import { Form, Formik } from "formik";
-import { searchSchema } from "../../validation/searchSchema";
+
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCurrentUserQuery } from "../../store/api/userApiSlice";
 import { setCurrentUser } from "../../store/authSlice";
 import InstagramLoader from "../loaders/InstagramLoader";
+import { IoAdd } from "react-icons/io5";
+import { handleAppendModal } from "../../utils/modal";
 const Header = () => {
   const { username } = useSelector((state) => state.auth);
 
   const { data: user, isLoading, isError } = useGetCurrentUserQuery(username);
-  const dispatch = useDispatch();
-  const handleSubmit = (values) => {
-    const { searchValue } = values;
-    console.log(searchValue);
-  };
 
-  const clearSearchValue = useCallback((setFieldValue) => {
-    setFieldValue("searchValue", "");
-  }, []);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isLoading && !isError) {
@@ -41,28 +34,12 @@ const Header = () => {
           />
         </Link>
 
-        {/* SEARCH INPUT */}
-        <Formik
-          onSubmit={handleSubmit}
-          initialValues={{
-            searchValue: "",
-          }}
-          validationSchema={searchSchema}
+        <button
+          onClick={() => handleAppendModal("add-post")}
+          className="border-2 rounded-md border-black hover:bg-black hover:text-white transition-all"
         >
-          {({ dirty, isValid, setFieldValue }) => (
-            <Form className="h-9">
-              <SearchInput
-                name="searchValue"
-                clearSearchValue={() => clearSearchValue(setFieldValue)}
-              />
-              <button
-                type="submit"
-                className="hidden"
-                disabled={!isValid || !dirty}
-              />
-            </Form>
-          )}
-        </Formik>
+          <IoAdd size={32} />
+        </button>
 
         {/* Navigation */}
         <Navbar username={username} />
