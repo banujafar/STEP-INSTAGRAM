@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { BsBookmark, BsDownload } from "react-icons/bs";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -16,7 +16,6 @@ import CommentSection from "./CommentSection";
 const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
   const { username } = useParams();
   const profilename = useSelector((state) => state.auth.username);
-
   const liked = likes.filter((item) => item.authorUsername === profilename);
   const [isLiked, setIsLiked] = useState(() =>
     liked.length === 0 ? false : true
@@ -30,10 +29,10 @@ const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
   const toggleLike = async () => {
     setIsLiked(!isLiked);
     if (isLiked) {
-      await deletePost({ postId }).unwrap();
+      await deletePost({ postId });
       setLikesCount((prev) => prev - 1);
     } else {
-      await likePost({ postId }).unwrap();
+      await likePost({ postId });
       setLikesCount((prev) => prev + 1);
     }
     refetchUser();
@@ -49,14 +48,21 @@ const PostActions = ({ likes, comments, authorUsername, caption, postId }) => {
       <div className="flex justify-between space-x-4 w-full px-4 mt-2">
         <div className="flex">
           <div className="relative">
-            <button className="flex mr-3 text-gray-600" onClick={toggleLike}>
+            <button
+              className="flex mr-3 text-gray-600"
+              onClick={toggleLike}
+              data-testid="toggle-like"
+            >
               {isLiked ? (
                 <AiFillHeart className="text-2xl" />
               ) : (
                 <AiOutlineHeart className="text-2xl" />
               )}
             </button>
-            <span className="mt-2 absolute top-4 w-64">
+            <span
+              className="mt-2 absolute top-4 w-64"
+              data-testid="likes-count"
+            >
               {!!likesCount ? `${likesCount} likes` : "Be first"}
             </span>
           </div>

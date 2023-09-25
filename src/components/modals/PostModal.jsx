@@ -44,7 +44,7 @@ const PostModal = () => {
             comments={comments}
             postId={postId}
           />
-          <AddComment postId={postId} />
+          <AddComment postId={postId} username={authorUsername} />
         </div>
       </div>
     </div>

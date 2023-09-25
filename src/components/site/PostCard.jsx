@@ -8,6 +8,7 @@ const PostCard = ({ post }) => {
   return (
     <div
       className="w-72 h-60 mr-2.5 mt-12"
+      data-testid="post-modal"
       onClick={() => handleAppendModal("post modal", { postId: post.postId })}
     >
       <div className="w-full h-full relative group/item shadow-lg cursor-pointer">

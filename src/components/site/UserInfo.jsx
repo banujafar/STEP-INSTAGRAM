@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
@@ -41,9 +41,9 @@ const UserInfo = ({ userData }) => {
     setSubscribed(!subscribed);
     try {
       if (subscribed) {
-        await unsubscribe({ username }).unwrap();
+        await unsubscribe({ username });
       } else {
-        await subscribe({ username }).unwrap();
+        await subscribe({ username });
       }
       refetchUser();
       refetchOwnAccount();
@@ -70,7 +70,7 @@ const UserInfo = ({ userData }) => {
           <h1 className="text-3xl mr-2">{username}</h1>
           <div className="border-solid border-2 border-gray-400 rounded px-4 mt-2 ml-2 mr-2">
             {isCurrentUser ? (
-              "Edit profile"
+              <span data-testid="edit-profile">Edit profile</span>
             ) : (
               <button onClick={toggleSubscribe}>
                 {subscribed ? "Unsubscribe" : "Subscribe"}
