@@ -3,17 +3,21 @@ import {
   useAddCommentMutation,
   useGetCurrentPostQuery,
 } from "../../../store/api/postApiSlice";
+import { useGetCurrentUserQuery } from "../../../store/api/userApiSlice";
 
-const AddComment = ({ postId }) => {
+const AddComment = ({ postId, username }) => {
   const [newComment, setNewComment] = useState("");
   const [addComment] = useAddCommentMutation();
-  const { refetch } = useGetCurrentPostQuery(postId);
+  const { refetch: refetchUser } = useGetCurrentUserQuery(username);
+  const { refetch: refetchPost } = useGetCurrentPostQuery(postId);
+
   const handleComment = async (e) => {
     e.preventDefault();
     try {
       await addComment({ postId, text: newComment }).unwrap();
-      refetch();
       setNewComment("");
+      refetchPost();
+      refetchUser();
     } catch (err) {
       console.log("Error happened:", err);
     }

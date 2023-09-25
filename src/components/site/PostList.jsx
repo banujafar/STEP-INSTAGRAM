@@ -1,14 +1,13 @@
 import { BsFillFilePersonFill, BsPersonCircle } from "react-icons/bs";
 import PostCard from "./PostCard";
 import { AiOutlineInsertRowAbove } from "react-icons/ai";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const PostList = ({ userData }) => {
   const posts = userData.posts;
   const copiedPosts = posts ? [...posts] : [];
   copiedPosts.sort((a, b) => b.timestamp - a.timestamp);
   const [isActive, setIsActive] = useState("POSTS");
-
   const handleChange = (option) => {
     setIsActive(option);
   };
@@ -38,7 +37,7 @@ const PostList = ({ userData }) => {
       {isActive === "POSTS" ? (
         !!copiedPosts.length ? (
           copiedPosts?.map((post, index) => (
-            <PostCard key={index} post={post} />
+            <PostCard key={index} post={post} data-testid="post-card" />
           ))
         ) : (
           <div className="w-full h-60 mt-12 flex flex-col items-center justify-center ml-8 text-2xl">
