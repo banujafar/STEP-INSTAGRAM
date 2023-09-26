@@ -6,6 +6,7 @@ Instagram Project
 
 • UserProfile component creation;✅
 • User profile posts implementation;✅
+• Testing;✅
 
 # Murad Masimli
 
